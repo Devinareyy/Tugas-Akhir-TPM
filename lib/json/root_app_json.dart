@@ -6,8 +6,8 @@ final List<Map<String, dynamic>> rootAppJson = [
     "text" : "Home",
   },
   {
-    "icon" : LineIcons.book,
-    "text" : "Manga",
+    "icon" : LineIcons.play,
+    "text" : "Anime",
   },
   {
     "icon" : LineIcons.heart,
@@ -15,6 +15,6 @@ final List<Map<String, dynamic>> rootAppJson = [
   },
   {
     "icon" : LineIcons.list,
-    "text" : "Other",
+    "text" : "Profile",
   }
 ];

@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
-import 'package:line_icons/line_icons.dart';
-
 import 'package:project_manga/theme/colors.dart';
-import 'package:project_manga/pages/favorite_manga_page.dart';
 
-class MangaDetailPage extends StatefulWidget {
-  final Map manga;
+class AnimeDetailPage extends StatefulWidget {
+  final Map anime;
 
-  const MangaDetailPage({Key? key, required this.manga}) : super(key: key);
+  const AnimeDetailPage({Key? key, required this.anime}) : super(key: key);
 
   @override
-  State<MangaDetailPage> createState() => _MangaDetailPageState();
+  State<AnimeDetailPage> createState() => _AnimeDetailPageState();
 }
 
-class _MangaDetailPageState extends State<MangaDetailPage> {
+class _AnimeDetailPageState extends State<AnimeDetailPage> {
   bool isFavorite = false;
 
   @override
   void initState() {
     super.initState();
-    isFavorite = FavoriteManga().isFavorite(widget.manga);
+    isFavorite = FavoriteAnime().isFavorite(widget.anime);
   }
 
   void toggleFavorite() {
@@ -28,11 +25,11 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
       isFavorite = !isFavorite;
     });
 
-    // Menambahkan atau menghapus agent dari daftar favorite
+    // Menambahkan atau menghapus anime dari daftar favorite
     if (isFavorite) {
-      FavoriteManga().addToFavorites(widget.manga);
+      FavoriteAnime().addToFavorites(widget.anime);
     } else {
-      FavoriteManga().removeFromFavorites(widget.manga);
+      FavoriteAnime().removeFromFavorites(widget.anime);
     }
   }
 
@@ -65,7 +62,7 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
                 height: double.infinity,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(widget.manga['images']['webp']['image_url']),
+                    image: NetworkImage(widget.anime['images']['webp']['image_url']),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -109,10 +106,8 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
                             Row(
                               children: [
                                 IconButton(
-                                  icon: Icon(
-                                    isFavorite ? Icons.favorite : Icons.favorite_border,
-                                    color: isFavorite ? Colors.red : null,
-                                  ),
+                                  icon:
+                                    isFavorite ? Icon(Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_border, color: Colors.white),
                                   onPressed: toggleFavorite,
                                 ),
                               ],
@@ -129,7 +124,7 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.manga['title'].toString(),
+                              widget.anime['title'].toString(),
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -164,14 +159,14 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
           Column(
             children: [
               Text(
-                widget.manga['chapters'].toString(),
+                widget.anime['episodes'].toString(),
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
               ),
               SizedBox(
                 height: 3,
               ),
               Text(
-                "Chapters",
+                "Episodes",
                 style: TextStyle(fontSize: 14, color: black.withOpacity(0.5)),
               ),
             ],
@@ -179,7 +174,7 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
           Column(
             children: [
               Text(
-                widget.manga['status'].toString(),
+                widget.anime['status'].toString(),
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
               ),
               SizedBox(
@@ -194,7 +189,7 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
           Column(
             children: [
               Text(
-                widget.manga['score'].toString(),
+                widget.anime['score'].toString(),
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
               ),
               SizedBox(
@@ -224,7 +219,7 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
         RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            text: widget.manga['synopsis'].toString(),
+            text: widget.anime['synopsis'].toString(),
             style: TextStyle(fontSize: 14, color: black.withOpacity(0.8)),
           ),
         ),
@@ -255,26 +250,26 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
   }
 }
 
-class FavoriteManga {
-  static final FavoriteManga _instance = FavoriteManga._internal();
+class FavoriteAnime {
+  static final FavoriteAnime _instance = FavoriteAnime._internal();
 
-  factory FavoriteManga() {
+  factory FavoriteAnime() {
     return _instance;
   }
 
-  FavoriteManga._internal();
+  FavoriteAnime._internal();
 
-  static List<dynamic> FavoriteMangas = [];
+  static List<dynamic> FavoriteAnimes = [];
 
-  void addToFavorites(dynamic agent) {
-    FavoriteMangas.add(agent);
+  void addToFavorites(dynamic favoriteAnime) {
+    FavoriteAnimes.add(favoriteAnime);
   }
 
-  void removeFromFavorites(dynamic agent) {
-    FavoriteMangas.remove(agent);
+  void removeFromFavorites(dynamic favoriteAnime) {
+    FavoriteAnimes.remove(favoriteAnime);
   }
 
-  bool isFavorite(dynamic agent) {
-    return FavoriteMangas.contains(agent);
+  bool isFavorite(dynamic favoriteAnime) {
+    return FavoriteAnimes.contains(favoriteAnime);
   }
 }

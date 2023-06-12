@@ -3,9 +3,10 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import 'package:project_manga/json/root_app_json.dart';
 import 'package:project_manga/pages/home_page.dart';
-import 'package:project_manga/pages/manga_page.dart';
+import 'package:project_manga/pages/anime_page.dart';
 import 'package:project_manga/pages/favorite_manga_page.dart';
 import 'package:project_manga/pages/other_page.dart';
+
 
 class RootApp extends StatefulWidget {
   const RootApp({Key? key}) : super(key: key);
@@ -29,8 +30,8 @@ class _RootAppState extends State<RootApp> {
       index: pageIndex,
       children: [
         HomePage(),
-        MangaListPage(),
-        FavoriteMangaPage(),
+        AnimeListPage(),
+        FavoriteAnimePage(),
         OtherPage(),
       ],
     );

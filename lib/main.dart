@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:project_manga/pages/login_page.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:project_manga/dbmodel/user.dart';
 
-void main() {
+String boxName = 'USER';
+
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter<UserModel>(UserModelAdapter());
+  await Hive.openBox<UserModel>(boxName);
   runApp(const MyApp());
 }
 
@@ -11,9 +18,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Volcano',
+      title: 'Anime',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
       home: const LoginPage(),
     );

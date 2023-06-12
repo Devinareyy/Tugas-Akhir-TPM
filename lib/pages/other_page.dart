@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:project_manga/pages/profile_page.dart';
-import 'package:project_manga/pages/clock_page.dart';
 import 'package:project_manga/pages/currency_page.dart';
 import 'package:project_manga/pages/login_page.dart';
 
@@ -14,8 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Other Page',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      title: 'Profile',
+      theme: ThemeData(primarySwatch: Colors.indigo),
       home: OtherPage(),
     );
   }
@@ -30,115 +27,81 @@ class OtherPage extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.all(12.0),
-            child: Text(
-              'Other',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+            child:
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Profile', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                    IconButton(onPressed: () async{
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      await prefs.remove('username');
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                            (route) => false,
+                      );
+                    },
+                        icon: Icon(Icons.logout)),
+                  ],
+                )
           ),
           Expanded(
-            child: Container(
-              color: Colors.yellow,
-              child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  if (index == 3) {
-                    return Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            SharedPreferences prefs = await SharedPreferences.getInstance();
-                            await prefs.remove('username');
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) => LoginPage()),
-                                  (route) => false,
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
+            child: Column(
+              children: [
+                SizedBox(height:100),
+                CircleAvatar(
+                  backgroundImage: NetworkImage('https://cdn.discordapp.com/attachments/734105016276746341/1113588530363514900/informal.jpg'),
+                  radius: 80,
+                ),
+                SizedBox(height:5),
+                Text('Devina Reynitta', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    'Teknologi Pemrograman Mobile merupakan salah satu matkul yang saya suka di semester 6, '
+                        'walaupun tugasnya project terus, setidaknya melihat hasil tugasnya membuat saya senang.'
+                        'Kemudian juga pak Bagus mengajarnya santai dan tidak tegang',
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 80),
+                OutlinedButton.icon(
+                    onPressed: (){
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Center(child: Text('Early Access Cost ¥2000 / mo', style: TextStyle(fontWeight: FontWeight.bold))),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('or', style: TextStyle(fontSize: 20)),
+                                SizedBox(height: 20),
+                                Text('14.29 USD', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                Text('200,000 Rupiah', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                Text('13.33 Euro', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                              ],
                             ),
-                            primary: Colors.blue,
-                            elevation: 0,
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(color: Colors.grey),
-                              ),
-                            ),
-                            child: Text(
-                              _getPageTitle(index),
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 4.0),
-                      ],
-                    );
-                  }
-                  return Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          if (index == 0) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ProfilePage()),
-                            );
-                          } else if (index == 1) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ClockPage()),
-                            );
-                          } else if (index == 2) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => CurrencyConverterPage()),
-                            );
-                          } else if (index == 3) {
-                            Navigator.pushNamed(context, '/logout');
-                          }
+                          );
                         },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: Colors.grey),
-                            ),
-                          ),
-                          child: Text(
-                            _getPageTitle(index),
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 4.0), // Add some spacing between items
-                    ],
-                  );
-                },
-              ),
+                      );
+                    },
+                    icon: Icon(Icons.workspace_premium_outlined),
+                    label: Padding(padding: EdgeInsets.all(10),child: Text('Go Premium', style: TextStyle(fontSize: 20))),
+                ),
+                TextButton(
+                    onPressed: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CurrencyConverterPage()),
+                      );
+                    },
+                    child: Text('Try to convert by yourself?')),
+              ],
             ),
           ),
         ],
       ),
     );
-  }
-
-  String _getPageTitle(int index) {
-    switch (index) {
-      case 0:
-        return 'Profile';
-      case 1:
-        return 'Clock';
-      case 2:
-        return 'Currency Converter';
-      case 3:
-        return 'Logout';
-      default:
-        return '';
-    }
   }
 }

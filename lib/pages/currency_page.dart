@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_manga/theme/colors.dart';
 
 class CurrencyConverterPage extends StatefulWidget {
   @override
@@ -10,16 +11,16 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
   double _dollar = 0;
   double _yen = 0;
   double _euro = 0;
-  double _yuan = 0;
-  double _peso = 0;
 
   void _convertCurrency() {
     setState(() {
-      _dollar = _rupiah / 15000; // 1 Dollar = 15,000 Rupiah
-      _yen = _rupiah / 140; // 1 Yen = 140 Rupiah
-      _euro = _rupiah / 17000; // 1 Euro = 17,000 Rupiah
-      _yuan = _rupiah / 2200; // 1 Yuan = 2,200 Rupiah
-      _peso = _rupiah / 300; // 1 Peso = 300 Rupiah
+      _dollar = _yen / 140; // 1 Dollar = 140 yen
+      _rupiah = _yen / 0.01; // 1 Rupiah = 0.01 Yen
+      _euro = _yen / 150; // 1 Euro = 150 Yen
+
+      _dollar = double.parse(_dollar.toStringAsFixed(2));
+      _rupiah = double.parse(_rupiah.toStringAsFixed(2));
+      _euro = double.parse(_euro.toStringAsFixed(2));
     });
   }
 
@@ -27,25 +28,28 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
-          'Currency Converter',
-          style: TextStyle(color: Colors.black87),
+          'Convert Currency',
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.blue.withOpacity(0.3),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            SizedBox(height: 50),
             TextField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Amount in Rupiah',
+                labelText: 'Amount in Yen',
               ),
               onChanged: (value) {
                 setState(() {
-                  _rupiah = double.tryParse(value) ?? 0;
+                  _yen = double.tryParse(value) ?? 0;
                 });
               },
             ),
@@ -61,22 +65,12 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
             ),
             SizedBox(height: 8),
             Text(
-              'Yen: ¥$_yen',
+              'Rupiah: RP$_rupiah',
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 8),
             Text(
               'Euro: €$_euro',
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Yuan: ¥$_yuan',
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Peso: ₱$_peso',
               style: TextStyle(fontSize: 18),
             ),
           ],

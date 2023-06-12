@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:project_manga/pages/manga_detail_page.dart';
+import 'package:project_manga/pages/anime_detail_page.dart';
 
-class FavoriteMangaPage extends StatefulWidget {
+class FavoriteAnimePage extends StatefulWidget {
   @override
-  _FavoriteMangaPageState createState() => _FavoriteMangaPageState();
+  _FavoriteAnimePageState createState() => _FavoriteAnimePageState();
 }
 
-class _FavoriteMangaPageState extends State<FavoriteMangaPage> {
-  List<dynamic> favoriteMangaList = FavoriteManga.FavoriteMangas;
+class _FavoriteAnimePageState extends State<FavoriteAnimePage> {
+  List<dynamic> favoriteMangaList = FavoriteAnime.FavoriteAnimes;
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +32,11 @@ class _FavoriteMangaPageState extends State<FavoriteMangaPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
           Image.network(
-          'https://storage.googleapis.com/sticker-prod/5BmzE1tKhsiOvIQNdqjx/14.png',
+          'https://cdn.discordapp.com/attachments/734105016276746341/1113553470067318905/slime.png',
           height: 100,
           ),
           SizedBox(height: 16),
-          Text('No favorite manga yet.'),
+          Text('YOU DON`T HAVE ANY FAVORITE?!'),
           ],
           ),
           )
@@ -52,7 +52,7 @@ class _FavoriteMangaPageState extends State<FavoriteMangaPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MangaDetailPage(manga: manga),
+                        builder: (context) => AnimeDetailPage(anime: manga),
                       ),
                     );
                   },

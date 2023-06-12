@@ -10,4 +10,4 @@ const Color black = Color(0xFF000000);
 
 const Color green = Color(0xFF26a96c);
 const Color pink = Color(0xFFbd6b73);
-const Color blue = Color(0xFF5fa8d3);
+const Color blue = Color(0xFF27467E);
